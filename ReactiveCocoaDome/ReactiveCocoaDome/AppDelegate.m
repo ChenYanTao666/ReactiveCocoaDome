@@ -4,7 +4,7 @@
 //
 //  Created by yuchen on 2017/4/6.
 //  Copyright © 2017年 yuchen. All rights reserved.
-//
+//   // 文章中列举的用例都是集百家之所长 希望能让你对RAC有个初步的认识
 
 #import "AppDelegate.h"
 
@@ -17,6 +17,7 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+
     return YES;
 }
 
