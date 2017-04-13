@@ -20,7 +20,7 @@
 @end
 
 @implementation ViewController
-
+// 文章中列举的用例都是集百家之所长 希望能让你对RAC有个初步的认识
 - (void)viewDidLoad {
     [super viewDidLoad];
     // 创建信号
