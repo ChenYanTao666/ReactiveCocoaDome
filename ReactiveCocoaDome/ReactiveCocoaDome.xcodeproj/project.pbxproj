@@ -244,8 +244,7 @@
 				TargetAttributes = {
 					4BBF7BD31E95E867007B54FC = {
 						CreatedOnToolsVersion = 8.2.1;
-						DevelopmentTeam = JW88D3EV49;
-						ProvisioningStyle = Automatic;
+						ProvisioningStyle = Manual;
 					};
 					4BBF7BEC1E95E867007B54FC = {
 						CreatedOnToolsVersion = 8.2.1;
@@ -515,8 +514,9 @@
 			baseConfigurationReference = 60B758A995535BB275584028 /* Pods-ReactiveCocoaDome.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = JW88D3EV49;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = ReactiveCocoaDome/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.netease.cn.ReactiveCocoaDome;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -528,8 +528,9 @@
 			baseConfigurationReference = 4D11AA81E88EA38F32AD207C /* Pods-ReactiveCocoaDome.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = JW88D3EV49;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = ReactiveCocoaDome/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.netease.cn.ReactiveCocoaDome;
 				PRODUCT_NAME = "$(TARGET_NAME)";

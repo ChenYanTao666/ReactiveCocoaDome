@@ -34,7 +34,7 @@
     
     //RACCommand使用
     [self useRACCommand];
-    
+
     // RACMulticastConnection使用步骤(多个订阅者的时候不用多次发送)
     [self useRACMulticastConnection];
     
@@ -49,6 +49,11 @@
    // RAC 简单示例
     [self simpleExample];
     
+    
+  
+    
+    
+    
 }
 
 
@@ -58,28 +63,20 @@
 
 - (void)creatSingal{
     // 1.创建信号
-    
     /**
      RACSubscriber:表示订阅者的意思，用于发送信号，这是一个协议，不是一个类，只要遵守这个协议，并且实现方法才能成为订阅者。通过create创建的信号，都有一个订阅者，帮助他发送数据。
      RACDisposable:用于取消订阅或者清理资源，当信号发送完成或者发送错误的时候，就会自动触发它。
      */
     RACSignal *siganl = [RACSignal createSignal:^RACDisposable *(id<RACSubscriber> subscriber) {
         // block调用时刻：每当有订阅者订阅信号，就会调用block。
-        
         // 2.发送信号
         [subscriber sendNext:@1];
-        
         // 如果不在发送数据，最好发送信号完成，内部会自动调用[RACDisposable disposable]取消订阅信号。
         [subscriber sendCompleted];
-        
         return [RACDisposable disposableWithBlock:^{
-            
             // block调用时刻：当信号发送完成或者发送错误，就会自动执行这个block,取消订阅信号。
-            
             // 执行完Block后，当前信号就不在被订阅了。
-            
             NSLog(@"信号被销毁");
-            
         }];
     }];
     // 3.订阅信号,才会激活信号.
@@ -140,7 +137,8 @@
     // 也就是先保存值，在订阅值。
     
     // 1.创建信号
-    RACReplaySubject *replaySubject = [RACReplaySubject subject];
+    RACReplaySubject *replaySubject = [RACReplaySubject replaySubjectWithCapacity:1];
+    
     
     // 2.发送信号
     [replaySubject sendNext:@1];
@@ -182,18 +180,20 @@
 //        [self.navigationController pushViewController:sendV animated:YES];
 //        
 //    }];
-//
+
     
     // 这种方法添加的行为可以在触发的时候的时候发送信号
     _pushbut.rac_command = [[RACCommand alloc]initWithSignalBlock:^RACSignal *(id input) {
-        @strongify(self);
-        SendViewController *sendV = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"SendViewController"];
-        sendV.delegateSingal = [RACSubject subject];
-        [sendV.delegateSingal subscribeNext:^(id x) {
-            NSLog(@"点击了通知按钮 %@",x);
+         return [RACSignal createSignal:^RACDisposable *(id<RACSubscriber> subscriber) {
+            [subscriber sendNext:@"发送数据"];
+            
+            // 注意：数据传递完，最好调用sendCompleted，这时命令才执行完毕。
+            [subscriber sendCompleted];
+            
+            return [RACDisposable disposableWithBlock:^{
+                
+            }];
         }];
-        [self.navigationController pushViewController:sendV animated:YES];
-        return [RACSignal empty];
     }];
     
     
@@ -205,7 +205,6 @@
     // rac_sequence注意点：调用subscribeNext，并不会马上执行nextBlock，而是会等一会。
     // 1.遍历数组
     NSArray *numbers = @[@1,@2,@3,@4];
-    
     // 这里其实是三步
     // 第一步: 把数组转换成集合RACSequence numbers.rac_sequence
     // 第二步: 把集合RACSequence转换RACSignal信号类,numbers.rac_sequence.signal
@@ -250,8 +249,7 @@
         
     }];
    
-    // 3.3 RAC高级写法:
-
+    // 字典转模型 RAC高级写法:
     // map:映射的意思，目的：把原始值value映射成一个新值
     // array: 把集合转换成数组
     // 底层实现：当信号被订阅，会遍历集合中的原始值，映射成新值，并且保存到新的数组里。
@@ -532,7 +530,7 @@
     
     
     // 定时器
-    RACSignal *singal = [[[[[RACSignal interval:1 onScheduler:[RACScheduler scheduler]]take:10]startWith:@(1)]map:^id(id value) {
+    RACSignal *singal = [[[[[RACSignal interval:1 onScheduler:[RACScheduler scheduler]]take:10]startWith:@(1000)]map:^id(id value) {
         NSLog(@"%@",value);
         return @"发送出去的信号";
     }]takeUntil:self.rac_willDeallocSignal];
@@ -1025,19 +1023,6 @@
          */
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 //、、常用的模式
 - (void)CommonMode{

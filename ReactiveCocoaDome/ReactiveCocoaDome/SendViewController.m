@@ -37,8 +37,7 @@
     [RACObserve(self.view, center)subscribeNext:^(id x) {
         NSLog(@"%@",x);
     }];
-    
-    // @weakify(self); @strongify(self);
+//    @weakify(self); @strongify(self);
     // RACTuplePack：把数据包装成RACTuple（元组类）
     // 把参数中的数据包装成元组
     RACTuple *tuple1 = RACTuplePack(@10,@20);
